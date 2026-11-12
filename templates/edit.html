@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Task</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Edit Task</h1>
+        <form action="{{ url_for('edit', task_id=task.id) }}" method="POST">
+            <input type="text" name="task" class="form-control" value="{{ task.task }}" maxlength="255" required>
+            <div class="form-row mt-2">
+                <div class="col-sm">
+                    <label class="small mb-0" for="priority">Priority</label>
+                    <select name="priority" id="priority" class="form-control">
+                        {% for p in priorities %}
+                        <option value="{{ p }}" {% if p == task.priority %}selected{% endif %}>{{ p|capitalize }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-sm">
+                    <label class="small mb-0" for="due_date">Due date</label>
+                    <input type="date" name="due_date" id="due_date" class="form-control"
+                           value="{{ task.due_date.isoformat() if task.due_date else '' }}">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary mt-2">Save</button>
+            <a href="{{ url_for('index') }}" class="btn btn-link mt-2">Cancel</a>
+        </form>
+    </div>
+</body>
+</html>
